@@ -28,10 +28,6 @@ class App extends Component {
     return `https://api.github.com/users${userApi}${typeApi}`
   }
 
-  componentDidMount() {
-
-  }
-
   handleSearch(e) {
     const value = e.target.value
     const keyvalue = e.which || e.keyCode;
@@ -63,12 +59,10 @@ class App extends Component {
   getReponse(type) {
     return (e) => {
       const username = this.state.userInfo.login
-
       axios.get(this.getApiGit(username, type))
         .then((res) => {
           console.log("teste de requisição: ", res.data)
           this.setState({
-
             //pode-se usar o type neste caso pois representa a propriedade starred ou repos. uma feature do ecma06
             [type]: res.data.map((element) => {
               return {
@@ -81,15 +75,11 @@ class App extends Component {
         }).catch((e) => {
           console.log("Erro ---> ", e)
         })
-
     }
 
 
 
   }
-
-
-
 
   render() {
     return (
