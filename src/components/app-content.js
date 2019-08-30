@@ -5,10 +5,10 @@ import Search from './search'
 import Content from './content'
 import ActionsButton from './actions'
 
-const AppContent = ({ userInfo, repos, starred, handleSearch, getStarred, getRepos}) => (
+const AppContent = ({ userInfo, repos, starred, handleSearch, isLoader ,getStarred, getRepos}) => (
     <div className="app">
         <Search handleSearch={ handleSearch }/>
-      
+        {isLoader && <div>carregando...</div> }
         {!!userInfo && <Perfil userinfo={ userInfo }/>}
         {!!userInfo && <ActionsButton getRepos={ getRepos } getStarred={getStarred} />}
 

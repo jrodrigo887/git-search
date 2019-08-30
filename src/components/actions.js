@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 
 
 const ActionsButton = ({getRepos, getStarred}) => (
@@ -9,9 +9,6 @@ const ActionsButton = ({getRepos, getStarred}) => (
     </div>
 )
 
-// ActionsButton.propTypes = {
-//     TitleButton: PropTypes.string.isRequired,
-//     handleButton: PropTypes.func.isRequired
-// }
+
 
 export default ActionsButton

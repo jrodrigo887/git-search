@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 const Perfil = ({ userinfo }) => (
     <div className="user-info">
-        <img src={userinfo.photo} />
+        <img src={userinfo.photo } />
 
         <h2 className="username"><a href={`https://github.com/${userinfo.login}`} >{ userinfo.username }</a></h2>
 
@@ -19,7 +19,7 @@ Perfil.propType = {
     userinfo: PropTypes.shape({
         username: PropTypes.string.isRequired,
         login: PropTypes.string.isRequired,
-        photo: PropTypes.string.isRequired,
+        photo: PropTypes.string,
         repos: PropTypes.number.isRequired,
         followers: PropTypes.number.isRequired,
         following: PropTypes.number.isRequired

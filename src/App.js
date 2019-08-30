@@ -16,30 +16,32 @@ class App extends Component {
           html_url: ""
         }
       ],
-      star: []
+      isLoader: false
 
     }
   }
 
+  getApiGit(username, type) {
+    console.log('Nome: ', username)
+    const userApi = username ? `/${username}` : ''
+    const typeApi = type ? `/${type}` : ''
+    return `https://api.github.com/users${userApi}${typeApi}`
+  }
+
   componentDidMount() {
-    if (this.state.userInfo != null) {
-      axios.get(`https://api.github.com/users/users/${this.state.login}`)
-        .then(res => {
-          const person = res.data;
-          console.log(person)
-          this.setState({ userInfo: person });
-        })
-    }
+
   }
 
   handleSearch(e) {
     const value = e.target.value
     const keyvalue = e.which || e.keyCode;
     const ENTER = 13
+   
 
     if (keyvalue === ENTER) {
-      axios.get(`https://api.github.com/users/${value}`).then((res) => {
-        console.log(res.name)
+      this.setState({isLoader: true})
+
+      axios.get(this.getApiGit(value)).then((res) => {
         var dat = res.data
         this.setState({
           userInfo: {
@@ -51,38 +53,39 @@ class App extends Component {
             following: dat.following
 
           },
+          repos: [],
+          starred: []
         })
-      })
-
+      }).finally(() => {this.setState({isLoader: false})})
     }
   }
 
   getReponse(type) {
     return (e) => {
-      console.log(type)
-      
-      axios.get(`https://api.github.com/users/${this.state.userInfo.login}/${type}`)
-      .then((res) => {
-        console.log("teste de requisição: ", res.data)
-        this.setState({
-          
-//pode-se usar o type neste caso pois representa a propriedade starred ou repos. uma feature do ecma06
-          [type]: res.data.map((element) => {
-            return {
-              name: element.name,
-              link: element.html_url
-            }
+      const username = this.state.userInfo.login
+
+      axios.get(this.getApiGit(username, type))
+        .then((res) => {
+          console.log("teste de requisição: ", res.data)
+          this.setState({
+
+            //pode-se usar o type neste caso pois representa a propriedade starred ou repos. uma feature do ecma06
+            [type]: res.data.map((element) => {
+              return {
+                name: element.name,
+                link: element.html_url
+              }
+            })
           })
-        })
 
         }).catch((e) => {
           console.log("Erro ---> ", e)
         })
 
     }
-    
 
-     
+
+
   }
 
 
@@ -95,6 +98,7 @@ class App extends Component {
         starred={this.state.starred}
         reposite={this.state.reposite}
         star={this.state.star}
+        isLoader={this.state.isLoader}
         handleSearch={(e) => this.handleSearch(e)}
         getRepos={this.getReponse('repos')}
         getStarred={this.getReponse('starred')}
