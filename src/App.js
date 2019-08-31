@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AppContent from './components/app-content'
 import './components/App.css'
 import axios from 'axios'
+import TestSum from './test/sum-test'
 
 class App extends Component {
   constructor() {
@@ -10,15 +11,16 @@ class App extends Component {
       userInfo: null,
       repos: [],
       starred: [],
-      reposite: [
-        {
-          name: "",
-          html_url: ""
-        }
-      ],
+      // reposite: [
+      //   {
+      //     name: "",
+      //     html_url: ""
+      //   }
+      // ],
       isLoader: false
 
     }
+   TestSum({num1: 1, num2: 2, result: 2}) 
   }
 
   getApiGit(username, type) {
@@ -32,10 +34,9 @@ class App extends Component {
     const value = e.target.value
     const keyvalue = e.which || e.keyCode;
     const ENTER = 13
-   
 
     if (keyvalue === ENTER) {
-      this.setState({isLoader: true})
+      this.setState({ isLoader: true })
 
       axios.get(this.getApiGit(value)).then((res) => {
         var dat = res.data
@@ -52,7 +53,7 @@ class App extends Component {
           repos: [],
           starred: []
         })
-      }).finally(() => {this.setState({isLoader: false})})
+      }).finally(() => { this.setState({ isLoader: false }) })
     }
   }
 
@@ -83,12 +84,8 @@ class App extends Component {
 
   render() {
     return (
-      <AppContent userInfo={this.state.userInfo}
-        repos={this.state.repos}
-        starred={this.state.starred}
-        reposite={this.state.reposite}
-        star={this.state.star}
-        isLoader={this.state.isLoader}
+      <AppContent 
+        {...this.state}
         handleSearch={(e) => this.handleSearch(e)}
         getRepos={this.getReponse('repos')}
         getStarred={this.getReponse('starred')}

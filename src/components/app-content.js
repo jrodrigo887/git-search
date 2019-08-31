@@ -7,7 +7,7 @@ import ActionsButton from './actions'
 
 const AppContent = ({ userInfo, repos, starred, handleSearch, isLoader ,getStarred, getRepos}) => (
     <div className="app">
-        <Search handleSearch={ handleSearch }/>
+        <Search  isDisabled={ isLoader } handleSearch={ handleSearch }/>
         {isLoader && <div>carregando...</div> }
         {!!userInfo && <Perfil userinfo={ userInfo }/>}
         {!!userInfo && <ActionsButton getRepos={ getRepos } getStarred={getStarred} />}
@@ -31,7 +31,11 @@ const AppContent = ({ userInfo, repos, starred, handleSearch, isLoader ,getStarr
 AppContent.propTypes = {
     userInfo: PropTypes.object, 
     repos: PropTypes.array.isRequired, 
-    starred: PropTypes.array.isRequired
+    starred: PropTypes.array.isRequired,
+    isLoader: PropTypes.bool.isRequired,
+    getRepos: PropTypes.func.isRequired,
+    getStarred: PropTypes.func.isRequired,
+    handleSearch: PropTypes.func.isRequired
 }
 
 export default AppContent
